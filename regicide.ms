@@ -65,29 +65,24 @@ parseIdx = function(raw)
     return ret
 end function
 
-Card = {"ranks": range(1, 10)}
+Card = {"suit_names": {"s": "Spades", "h": "Hearts", "c": "Clubs", "d": "Diamonds"}} //Cards are NOT supposed to be mutated once inited.
 Card.init = function(self, rank, suit)
     self.rank = rank
     self.suit = suit
-    if rank == "A" then
-        self.value = 1
-    else if rank == "K" then
-        self.value = 20
-    else if rank == "Q" then
-        self.value = 15
-    else if rank == "J" then
-        self.value = 10
-    else
-        self.value = val(self.rank)
-    end if
+    self.value = val(self.rank)
+    if rank == "A" then self.value = 1
+    if rank == "K" then self.value = 20
+    if rank == "Q" then self.value = 15
+    if rank == "J" then self.value = 10
     return self
 end function
 Card.name = function(self)
-    if self.rank == "A" then return "Ace"
-    if self.rank == "K" then return "King"
-    if self.rank == "Q" then return "Queen"
-    if self.rank == "J" then return "Jack"
-    return self.rank
+    name = self.rank
+    if self.rank == "A" then name = "Ace"
+    if self.rank == "K" then name = "King"
+    if self.rank == "Q" then name = "Queen"
+    if self.rank == "J" then name = "Jack"
+    return name + " of " + self.suit_names[self.suit]
 end function
 Card.isAnimal = function(self)
     return self.rank == "A"
@@ -154,9 +149,9 @@ Game.help = function(self)
     "  joker        Refresh hand (You have 2 Jokers at start)" + char(10) +
     "  ?            Show this help prompt" + char(10) +
     "  q            quit" + char(10) +
-    "Suits: h=hearts d=diamonds c=clubs s=spades" + char(10) +
+    "Suits: h: Hearts d: Diamonds c: Clubs s: Spades" + char(10) +
     "Powers (blocked if the enemy is the same suit):" + char(10) +
-    "  h Heal  d Draw  c Crit(double-dmg)  s Shield" + char(10) +
+    "  h: Heal  d: Draw  c: Crit(double-dmg)  s: Shield" + char(10) +
     "Win tiers: 0 jokers used: gold, 1: silver, 2: bronze" + char(10) +
     "Learn how-to-play: https://www.regicidegame.com/site_files/33132/upload_files/RegicideRulesA4.pdf"
     return [0, print(helpMsg)]
