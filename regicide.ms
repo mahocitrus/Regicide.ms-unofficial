@@ -145,7 +145,6 @@ Game.help = function(self)
     "  a<n>         Play Ace n alone" + char(10) +
     "  a<n> <m>     Pair Ace n with card m" + char(10) +
     "  yield        Skip attack and take damage (can not use if enemy atk is 0)" + char(10) +
-
     "  joker        Refresh hand (You have 2 Jokers at start)" + char(10) +
     "  ?            Show this help prompt" + char(10) +
     "  q            quit" + char(10) +
@@ -180,8 +179,7 @@ Game.draw = function(self, n)
 end function
 Game.next_enemy = function(self)
     if not self.castle then return print("All enemies defeated!")
-    top = self.castle.pop
-    self.enemy = (new Enemy).init(top)
+    self.enemy = (new Enemy).init(self.castle.pop)
     self.played = []
     print("New enemy appeared!" + char(10) + self.enemy.status + char(10) + "Castle remaining: " + self.castle.len)
     return self.enemy
@@ -287,7 +285,7 @@ Game.parse_animal = function(self, raw)
     if parts.len == 1 then
         cards = [self.hand[ai]]
         self.hand.remove[ai]
-        return card
+        return cards
     end if
     bi = int(parts[1])
     if not bi then return print("  Bad second index")
