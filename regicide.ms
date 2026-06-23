@@ -393,7 +393,7 @@ Game.step4 = function(self)
                 print("  No jokers left!")
                 continue
             end if
-            self.discard = self.discard + self.discarded
+            self.discard = self.discard + discarded
             discarded = []
             self.use_joker
             continue
